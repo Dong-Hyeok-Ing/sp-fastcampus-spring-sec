@@ -16,19 +16,31 @@
     <div class="links">
 
         <div class="link">
-            <a href="/login">  로그인 </a>
+            <a href="/login" sec:authorize="!isAuthenticated()">  로그인 </a>
         </div>
         <div class="link">
-            <a href="/login-error">  로그인 에러  </a>
+            <a href="/login-error" sec:authorize="isAuthenticated()">  로그인 에러  </a>
         </div>
         <div class="link">
-            <a href="/access-denied">  접근 에러  </a>
+            <a href="/access-denied" sec:authorize="isAuthenticated()">  접근 에러  </a>
         </div>
-        <div class="link">
-            <a href="/user-page">  유저 페이지  </a>
+        <div class="link" sec:authorize="isAuthenticated()">
+            <a href="/user-page">유저 페이지</a>
         </div>
+        <div class="link" sec:authorize="isAuthenticated()">
+            <a href="/admin-page">관리자 페이지</a>
+        </div>
+        <!--<div class="link" sec:authorize="hasRole('ROLE_USER')">
+            <a href="/user-page">유저 페이지</a>
+        </div>
+        <div class="link" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="/admin-page">관리자 페이지</a>
+        </div>-->
+
         <div class="link">
-            <a href="/admin-page">  관리자 로그인 </a>
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-info" type="submit" sec:authorize="isAuthenticated()">로그 아웃</button>
+            </form>
         </div>
 
     </div>
